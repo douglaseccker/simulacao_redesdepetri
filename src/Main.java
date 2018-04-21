@@ -7,7 +7,7 @@ import classes.Lugar;
 import classes.Transicao;
 
 public class Main {
-    public static final int ITERATION = 5;
+    public static final int ITERATION = 10;
 
 	public static void main(String[] args) {
         List<Lugar> lugares = new ArrayList<Lugar>();
