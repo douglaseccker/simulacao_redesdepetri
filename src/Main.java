@@ -3,7 +3,6 @@ import classes.Lugar;
 import classes.Transicao;
 
 public class Main {
-
 	public static void main(String[] args) {
 		Lugar lugar1 = new Lugar(1, 2);
 		Lugar lugar2 = new Lugar(2, 2);
