@@ -7,7 +7,7 @@ public class Transicao {
     private int indice;
     private List<Arco> entrada = new ArrayList<Arco>();
     private List<Arco> saida = new ArrayList<Arco>();
-    //private boolean habilitada;
+    private boolean habilitada;
 
     public Transicao(int indice) {
         this.indice = indice;
@@ -27,46 +27,61 @@ public class Transicao {
         return entrada;
     }
 
-    public void run()
-    {
-        boolean tem = true;
+    public List<Arco> getSaida() {
+        return saida;
+    }
 
-        System.out.println("entrada");
+    public String getNome() {
+		return "T" + this.indice;
+    }
+    
+    public boolean isHabilitada() {
+        return habilitada;
+    }
 
-        for (Arco arco : entrada) {
-            //if (arco.getDirecao() == Arco.Direcao.LUGAR_TRANSICAO) {
-                System.out.println(arco.getLugar().toString());
-
-                if (!arco.getLugar().hasMarcasSuficientes(arco.getPeso()))
-                {
-                    tem = false;
-                }
-            //}
+    public void run() {
+        if(!this.habilitada) {
+            return;
         }
 
-        if (!tem) return;
+        //System.out.println("entrada");
 
-        System.out.println("saida");
+        for (Arco arco : this.entrada) {
+            arco.getLugar().removeMarcas(arco.getPeso());
 
-        for (Arco arco : saida) {
-            System.out.println(arco.getLugar().toString());
+            //System.out.println(arco.getLugar().toString());
+        }
+
+        //System.out.println("saida");
+
+        for (Arco arco : this.saida) {
+            //System.out.println(arco.getLugar().toString());
 
             //if (arco.getDirecao() == Arco.Direcao.LUGAR_TRANSICAO) {
             arco.getLugar().addMarcas(arco.getPeso());
             //}
 
-            System.out.println(arco.getLugar().toString());
-        }
-
-        System.out.println("dps de tirar marcar");
-        for (Arco arco : entrada) {
-            arco.getLugar().removeMarcas(arco.getPeso());
-
-            System.out.println(arco.getLugar().toString());
+            //System.out.println(arco.getLugar().toString());
         }
     }
 
-	public String getNome() {
-		return "T" + this.indice;
-	}
+    public boolean checkHabilitada() {
+        boolean hasMarcas = true;
+
+        //System.out.println("entrada");
+
+        for (Arco arco : this.entrada) {
+            //if (arco.getDirecao() == Arco.Direcao.LUGAR_TRANSICAO) {
+                //System.out.println(arco.getLugar().toString());
+
+                if (!arco.getLugar().hasMarcasSuficientes(arco.getPeso())) {
+                    hasMarcas = false;
+                }
+            //}
+        }
+
+        this.habilitada = hasMarcas;
+
+        return hasMarcas;
+    }
 }

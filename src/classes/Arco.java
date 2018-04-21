@@ -3,11 +3,11 @@ package classes;
 public class Arco {
     private int indice;
     private Lugar lugar;
-    private Transicao transicao;
+    //private Transicao transicao;
     private int peso;
-    private Direcao direcao;
+    //private Direcao direcao;
 
-    public enum Direcao { LUGAR_TRANSICAO, TRANSICAO_LUGAR };
+    //public enum Direcao { LUGAR_TRANSICAO, TRANSICAO_LUGAR };
 
     public Arco(int indice, Lugar lugar) {
         this(indice, lugar, 1);
@@ -35,13 +35,13 @@ public class Arco {
         this.peso = peso;
     }
 
-    public Transicao getTransicao() {
-        return transicao;
-    }
+    //public Transicao getTransicao() {
+    //    return transicao;
+    //}
 
-    public void setTransicao(Transicao transicao) {
-        this.transicao = transicao;
-    }
+    //public void setTransicao(Transicao transicao) {
+    //    this.transicao = transicao;
+    //}
 
     public int getIndice() {
         return indice;
@@ -51,13 +51,13 @@ public class Arco {
         this.indice = indice;
     }
 
-    public Direcao getDirecao() {
-        return direcao;
-    }
+    //public Direcao getDirecao() {
+    //    return direcao;
+    //}
 
-    public void setDirecao(Direcao direcao) {
-        this.direcao = direcao;
-    }
+    //public void setDirecao(Direcao direcao) {
+    //    this.direcao = direcao;
+    //}
 
     @Override
     public String toString() {
