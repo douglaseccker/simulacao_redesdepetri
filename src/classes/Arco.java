@@ -9,6 +9,10 @@ public class Arco {
 
     public enum Direcao { LUGAR_TRANSICAO, TRANSICAO_LUGAR };
 
+    public Arco(int indice, Lugar lugar) {
+        this(indice, lugar, 1);
+    }
+
     public Arco(int indice, Lugar lugar, int peso) {
         this.indice = indice;
         this.lugar = lugar;
@@ -53,5 +57,10 @@ public class Arco {
 
     public void setDirecao(Direcao direcao) {
         this.direcao = direcao;
+    }
+
+    @Override
+    public String toString() {
+        return "A" + this.indice;
     }
 }

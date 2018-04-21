@@ -7,7 +7,7 @@ public class Transicao {
     private int indice;
     private List<Arco> entrada = new ArrayList<Arco>();
     private List<Arco> saida = new ArrayList<Arco>();
-    private boolean habilitada;
+    //private boolean habilitada;
 
     public Transicao(int indice) {
         this.indice = indice;
@@ -21,6 +21,10 @@ public class Transicao {
 
     public void addSaida(Arco arco) {
         this.saida.add(arco);
+    }
+
+    public List<Arco> getEntrada() {
+        return entrada;
     }
 
     public void run()
@@ -61,4 +65,8 @@ public class Transicao {
             System.out.println(arco.getLugar().toString());
         }
     }
+
+	public String getNome() {
+		return "T" + this.indice;
+	}
 }

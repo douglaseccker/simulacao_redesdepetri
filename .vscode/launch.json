@@ -9,7 +9,7 @@
             "name": "Debug (Launch)-Main<redespetri>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "stopOnEntry": false,
             "mainClass": "Main",
             "projectName": "redespetri",

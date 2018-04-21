@@ -5,7 +5,7 @@ public class Lugar {
     private int marcas;
 
     public Lugar(int indice) {
-        this(indice, 0);
+        this(indice, 1);
     }
 
     public Lugar(int indice, int marcas) {
@@ -45,4 +45,8 @@ public class Lugar {
     public String toString() {
         return String.format("Sou o lugar L%d e tenho %d", this.indice, this.marcas);
     }
+
+	public String getNome() {
+		return "L" + this.indice;
+	}
 }
