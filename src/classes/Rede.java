@@ -10,9 +10,42 @@ public class Rede {
     private List<Transicao> transicoes = new ArrayList<Transicao>();
     private int lugaresNum;
     private int transicoesNum;
+    private int currentCicle;
 
 	public Rede() {
+		this.currentCicle = 1;
     }
+	
+	public void run() {
+		Scanner keyIn = new Scanner(System.in);
+
+        System.out.print("Pressione enter para rodar a " + this.currentCicle + "ª interacao. ");
+        
+        keyIn.nextLine();
+        
+        boolean canRun = false;
+
+        for (Transicao transicao : this.getTransicoes()) {
+            transicao.run();
+        }
+
+        for (Transicao transicao : this.getTransicoes()) {
+            canRun |= transicao.checkHabilitada();
+        }
+        
+        System.out.println();
+        this.printLugar(this.getLugares());
+        this.printTransicao(this.getTransicoes());
+        System.out.println();
+
+        if(canRun) {
+	        this.currentCicle++;
+	        
+	        this.run();
+        }else {
+        	System.out.println("Final");
+        }
+	}
 	
 	public void montaRedeArquivo(Scanner scan) throws Exception {
 		System.out.println("Informe o nome do arquivo de leitura da rede: ");
@@ -77,10 +110,18 @@ public class Rede {
         for (Transicao transicao : this.transicoes) {
             String numberStr = lines[currentLine];
             String[] numbers = numberStr.trim().split(",");
+            
+            if(numbers.length > this.lugares.size()) {
+            	throw new Exception("Número de lugares informado para a " + transicao.getNome() + " maior do que o número de lugares total.");
+            }
 
             for (int i = 1; i <= numbers.length; i++) {
-                // TODO: Validacao... Exception: IndexOutOfBoundsException
-                Arco arco = new Arco(i, this.lugares.get(Integer.parseInt(numbers[i - 1].trim()) - 1));
+            	int index = Integer.parseInt(numbers[i - 1].trim()) - 1;
+                if(index < 0 || index > this.lugares.size()) {
+                	throw new Exception("Lugar " + index + " informado para a " + transicao.getNome() + " inválido");
+                }
+            	
+            	Arco arco = new Arco(i, this.lugares.get(index));
 
                 transicao.addEntrada(arco);
             }
@@ -88,14 +129,25 @@ public class Rede {
             currentLine++;
         }
 
-        // TODO: Indice dos arcos irÃ£o se repetir
+        //Adicionada variável indexArco exclusivamente para índices dos arcos não repetirem
+        int indexArco = 1;
         for (Transicao transicao : this.transicoes) {
             String numberStr = lines[currentLine];
             String[] numbers = numberStr.trim().split(",");
 
+            //Verifica se os índices são válidos
+        	if(numbers.length > this.lugares.size()) {
+            	throw new Exception("Número de lugares informado para a " + transicao.getNome() + " maior do que o número de lugares total.");
+            }
+
             for (int i = 1; i <= numbers.length; i++) {
-                // TODO: Validacao... Exception: IndexOutOfBoundsException
-                Arco arco = new Arco(i, this.lugares.get(Integer.parseInt(numbers[i - 1].trim()) - 1));
+            	//Verifica se o índice é válido
+            	int index = Integer.parseInt(numbers[i - 1].trim()) - 1;
+                if(index < 0 || index > this.lugares.size()) {
+                	throw new Exception("Lugar " + index + " informado para a " + transicao.getNome() + " inválido");
+                }
+            	
+            	Arco arco = new Arco(indexArco++, this.lugares.get(index));
 
                 transicao.addSaida(arco);
             }
@@ -129,7 +181,7 @@ public class Rede {
         }
 	}
 
-	public void montaRedeInterativa(Scanner scan) {
+	public void montaRedeInterativa(Scanner scan) throws Exception {
 		System.out.print("Quantos lugares? ");
         this.lugaresNum = scan.nextInt();
 
@@ -156,25 +208,41 @@ public class Rede {
             String numberStr = scan.nextLine();
             String[] numbers = numberStr.trim().split(",");
 
+            if(numbers.length > this.lugares.size()) {
+            	throw new Exception("Número de lugares informado para a " + transicao.getNome() + " maior do que o número de lugares total.");
+            }
+
             for (int i = 1; i <= numbers.length; i++) {
-                // TODO: Validacao... Exception: IndexOutOfBoundsException
-                Arco arco = new Arco(i, this.lugares.get(Integer.parseInt(numbers[i - 1].trim()) - 1));
+            	int index = Integer.parseInt(numbers[i - 1].trim()) - 1;
+                if(index < 0 || index > this.lugares.size()) {
+                	throw new Exception("Lugar " + index + " informado para a " + transicao.getNome() + " inválido");
+                }
+            	
+            	Arco arco = new Arco(i, this.lugares.get(index));
 
                 transicao.addEntrada(arco);
             }
         }
 
-        // TODO: Indice dos arcos irÃ£o se repetir
-
+        //Adicionada variável indexArco exclusivamente para índices dos arcos não repetirem
+        int indexArco = 1;
         for (Transicao transicao : this.transicoes) {
             System.out.printf("Quais os lugares de saida de %s? ", transicao.getNome());
 
             String numberStr = scan.nextLine();
             String[] numbers = numberStr.trim().split(",");
 
+            if(numbers.length > this.lugares.size()) {
+            	throw new Exception("Número de lugares informado para a " + transicao.getNome() + " maior do que o número de lugares total.");
+            }
+
             for (int i = 1; i <= numbers.length; i++) {
-                // TODO: Validacao... Exception: IndexOutOfBoundsException
-                Arco arco = new Arco(i, this.lugares.get(Integer.parseInt(numbers[i - 1].trim()) - 1));
+            	int index = Integer.parseInt(numbers[i - 1].trim()) - 1;
+                if(index < 0 || index > this.lugares.size()) {
+                	throw new Exception("Lugar " + index + " informado para a " + transicao.getNome() + " inválido");
+                }
+            	
+            	Arco arco = new Arco(indexArco++, this.lugares.get(index));
 
                 transicao.addSaida(arco);
             }
@@ -213,6 +281,55 @@ public class Rede {
             transicao.checkHabilitada();
         }
 	}
+	
+	private static String padRight(String s, int n) {
+        return String.format("%1$-" + n + "s", s);
+    }
+   
+    private static String padLeft(String s, int n) {
+        return String.format("%1$" + n + "s", s);  
+    }
+    
+    public static void printLugar(List<Lugar> lugares) {
+        String borderTable  = "+----------+";
+        String lugarLine    = "| Lugar    |";
+        String marcacaoLine = "| Marcacao |";
+
+        for (Lugar lugar : lugares) {
+            borderTable += "----+";
+            lugarLine += padLeft(lugar.getNome(), 3) + " |";
+            marcacaoLine += padLeft(Integer.toString(lugar.getMarcas()), 3) + " |";
+        }
+
+        System.out.println(borderTable);
+        System.out.println(lugarLine);
+        System.out.println(borderTable);
+        System.out.println(marcacaoLine);
+        System.out.println(borderTable);
+    }
+
+    public static void printTransicao(List<Transicao> transicoes) {
+        String borderTable    = "+------------+";
+        String transicaoLine  = "| Transicao  |";
+        String habilitadaLine = "| Habilitada |";
+
+        for (Transicao transicao : transicoes) {
+            borderTable += "----+";
+            transicaoLine += padLeft(transicao.getNome(), 3) + " |";
+
+            if(transicao.isHabilitada()) {
+                habilitadaLine += "  S |";
+            } else {
+                habilitadaLine += "  N |";
+            }
+        }
+
+        System.out.println(borderTable);
+        System.out.println(transicaoLine);
+        System.out.println(borderTable);
+        System.out.println(habilitadaLine);
+        System.out.println(borderTable);
+    }
 
 	public List<Lugar> getLugares() {
 		return this.lugares;
@@ -244,5 +361,13 @@ public class Rede {
 
 	public void setTransicoesNum(int transicoesNum) {
 		this.transicoesNum = transicoesNum;
+	}
+	
+	public int getCurrentCicle() {
+		return this.currentCicle;
+	}
+
+	public void setCurrentCicle(int currentCicle) {
+		this.currentCicle = currentCicle;
 	}
 }
