@@ -80,7 +80,7 @@ public class Rede {
 
             for (int i = 1; i <= numbers.length; i++) {
                 // TODO: Validacao... Exception: IndexOutOfBoundsException
-                Arco arco = new Arco(i, lugares.get(Integer.parseInt(numbers[i - 1].trim()) - 1));
+                Arco arco = new Arco(i, this.lugares.get(Integer.parseInt(numbers[i - 1].trim()) - 1));
 
                 transicao.addEntrada(arco);
             }
@@ -95,7 +95,7 @@ public class Rede {
 
             for (int i = 1; i <= numbers.length; i++) {
                 // TODO: Validacao... Exception: IndexOutOfBoundsException
-                Arco arco = new Arco(i, lugares.get(Integer.parseInt(numbers[i - 1].trim()) - 1));
+                Arco arco = new Arco(i, this.lugares.get(Integer.parseInt(numbers[i - 1].trim()) - 1));
 
                 transicao.addSaida(arco);
             }
@@ -158,7 +158,7 @@ public class Rede {
 
             for (int i = 1; i <= numbers.length; i++) {
                 // TODO: Validacao... Exception: IndexOutOfBoundsException
-                Arco arco = new Arco(i, lugares.get(Integer.parseInt(numbers[i - 1].trim()) - 1));
+                Arco arco = new Arco(i, this.lugares.get(Integer.parseInt(numbers[i - 1].trim()) - 1));
 
                 transicao.addEntrada(arco);
             }
@@ -174,7 +174,7 @@ public class Rede {
 
             for (int i = 1; i <= numbers.length; i++) {
                 // TODO: Validacao... Exception: IndexOutOfBoundsException
-                Arco arco = new Arco(i, lugares.get(Integer.parseInt(numbers[i - 1].trim()) - 1));
+                Arco arco = new Arco(i, this.lugares.get(Integer.parseInt(numbers[i - 1].trim()) - 1));
 
                 transicao.addSaida(arco);
             }
@@ -215,7 +215,7 @@ public class Rede {
 	}
 
 	public List<Lugar> getLugares() {
-		return lugares;
+		return this.lugares;
 	}
 
 	public void setLugares(List<Lugar> lugares) {
@@ -223,7 +223,7 @@ public class Rede {
 	}
 
 	public List<Transicao> getTransicoes() {
-		return transicoes;
+		return this.transicoes;
 	}
 
 	public void setTransicoes(List<Transicao> transicoes) {
@@ -231,7 +231,7 @@ public class Rede {
 	}
 
 	public int getLugaresNum() {
-		return lugaresNum;
+		return this.lugaresNum;
 	}
 
 	public void setLugaresNum(int lugaresNum) {
@@ -239,7 +239,7 @@ public class Rede {
 	}
 
 	public int getTransicoesNum() {
-		return transicoesNum;
+		return this.transicoesNum;
 	}
 
 	public void setTransicoesNum(int transicoesNum) {
