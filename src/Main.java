@@ -1,127 +1,61 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import classes.Arco;
 import classes.Lugar;
+import classes.Rede;
 import classes.Transicao;
 
 public class Main {
     public static final int ITERATION = 10;
 
 	public static void main(String[] args) {
-        List<Lugar> lugares = new ArrayList<Lugar>();
-        List<Transicao> transicoes = new ArrayList<Transicao>();
-        int lugaresNum;
-        int transicoesNum;
+		Rede rede = new Rede();
+//        List<Lugar> lugares = new ArrayList<Lugar>();
+//        List<Transicao> transicoes = new ArrayList<Transicao>();
+//        int lugaresNum;
+//        int transicoesNum;
         Scanner scan = new Scanner(System.in);
 
-        System.out.print("Quantos lugares? ");
-        lugaresNum = scan.nextInt();
+        System.out.print("Selecione o método de leitura da rede: 1 - interativo, 2 - arquivo: ");
+        int option = scan.nextInt();
 
-        System.out.print("Quantas transicoes? ");
-        transicoesNum = scan.nextInt();
-
-        for (int i = 1; i <= lugaresNum; i++) {
-            Lugar lugar = new Lugar(i);
-
-            lugares.add(lugar);
-        }
-
-        for (int i = 1; i <= transicoesNum; i++) {
-            Transicao transicao = new Transicao(i);
-
-            transicoes.add(transicao);
-        }
-
-        scan.nextLine();
-
-        for (Transicao transicao : transicoes) {
-            System.out.printf("Quais os lugares de entrada de %s? ", transicao.getNome());
-
-            String numberStr = scan.nextLine();
-            String[] numbers = numberStr.trim().split(",");
-
-            for (int i = 1; i <= numbers.length; i++) {
-                // TODO: Validacao... Exception: IndexOutOfBoundsException
-                Arco arco = new Arco(i, lugares.get(Integer.parseInt(numbers[i - 1].trim()) - 1));
-
-                transicao.addEntrada(arco);
-            }
-        }
-
-        // TODO: Indice dos arcos irÃ£o se repetir
-
-        for (Transicao transicao : transicoes) {
-            System.out.printf("Quais os lugares de saida de %s? ", transicao.getNome());
-
-            String numberStr = scan.nextLine();
-            String[] numbers = numberStr.trim().split(",");
-
-            for (int i = 1; i <= numbers.length; i++) {
-                // TODO: Validacao... Exception: IndexOutOfBoundsException
-                Arco arco = new Arco(i, lugares.get(Integer.parseInt(numbers[i - 1].trim()) - 1));
-
-                transicao.addSaida(arco);
-            }
-        }
-
-        for (Lugar lugar : lugares) {
-            System.out.printf("Quantas marcas em %s? ", lugar.getNome());
-
-            int marcasLugar = scan.nextInt();
-            lugar.setMarcas(marcasLugar);
-        }
-
-        for (Transicao transicao : transicoes) {
-            for (Arco arco : transicao.getEntrada()) {
-                System.out.printf(
-                    "Qual o peso do arco de %s para %s? ",
-                    arco.getLugar().getNome(),
-                    transicao.getNome()
-                );
-
-                int pesoArco = scan.nextInt();
-                arco.setPeso(pesoArco);
-            }
-
-            for (Arco arco : transicao.getSaida()) {
-                System.out.printf(
-                    "Qual o peso do arco de %s para %s? ",
-                    transicao.getNome(),
-                    arco.getLugar().getNome()
-                );
-
-                int pesoArco = scan.nextInt();
-                arco.setPeso(pesoArco);
-            }
-
-            transicao.checkHabilitada();
+        if(option == 1) {
+	        rede.montaRedeInterativa(scan);
+        }else {
+        	try {
+				rede.montaRedeArquivo(scan);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
         }
 
         System.out.println();
-        printLugar(lugares);
-        printTransicao(transicoes);
+        printLugar(rede.getLugares());
+        printTransicao(rede.getTransicoes());
         System.out.println();
-
-        scan.close();
+        
+        System.out.println("Pressione enter para rodar a primeira interacao...");
+        System.out.println(scan.nextLine());
+        
+        System.exit(0);
 
         for (int i = 1; i <= ITERATION; i++) {
             boolean canRun = false;
 
-            System.out.println(i + "a interacao...");
-
-            for (Transicao transicao : transicoes) {
+            for (Transicao transicao : rede.getTransicoes()) {
                 transicao.run();
             }
 
-            for (Transicao transicao : transicoes) {
+            for (Transicao transicao : rede.getTransicoes()) {
                 canRun |= transicao.checkHabilitada();
             }
 
             System.out.println();
-            printLugar(lugares);
-            printTransicao(transicoes);
+            printLugar(rede.getLugares());
+            printTransicao(rede.getTransicoes());
             System.out.println();
 
             if(!canRun) {
