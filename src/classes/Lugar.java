@@ -46,7 +46,7 @@ public class Lugar {
         return String.format("Sou o lugar L%d e tenho %d", this.indice, this.marcas);
     }
 
-	public String getNome() {
-		return "L" + this.indice;
-	}
+    public String getNome() {
+        return "L" + this.indice;
+    }
 }

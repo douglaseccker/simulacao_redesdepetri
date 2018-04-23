@@ -32,52 +32,34 @@ public class Transicao {
     }
 
     public String getNome() {
-		return "T" + this.indice;
+        return "T" + this.indice;
     }
-    
+
     public boolean isHabilitada() {
         return habilitada;
     }
 
     public void run() {
-        if(!this.habilitada) {
+        if (!this.habilitada) {
             return;
         }
 
-        //System.out.println("entrada");
-
         for (Arco arco : this.entrada) {
             arco.getLugar().removeMarcas(arco.getPeso());
-
-            //System.out.println(arco.getLugar().toString());
         }
 
-        //System.out.println("saida");
-
         for (Arco arco : this.saida) {
-            //System.out.println(arco.getLugar().toString());
-
-            //if (arco.getDirecao() == Arco.Direcao.LUGAR_TRANSICAO) {
             arco.getLugar().addMarcas(arco.getPeso());
-            //}
-
-            //System.out.println(arco.getLugar().toString());
         }
     }
 
     public boolean checkHabilitada() {
         boolean hasMarcas = true;
 
-        //System.out.println("entrada");
-
         for (Arco arco : this.entrada) {
-            //if (arco.getDirecao() == Arco.Direcao.LUGAR_TRANSICAO) {
-                //System.out.println(arco.getLugar().toString());
-
-                if (!arco.getLugar().hasMarcasSuficientes(arco.getPeso())) {
-                    hasMarcas = false;
-                }
-            //}
+            if (!arco.getLugar().hasMarcasSuficientes(arco.getPeso())) {
+                hasMarcas = false;
+            }
         }
 
         this.habilitada = hasMarcas;
