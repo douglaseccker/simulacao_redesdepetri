@@ -45,7 +45,11 @@ public class Transicao {
         }
 
         for (Arco arco : this.entrada) {
-            arco.getLugar().removeMarcas(arco.getPeso());
+            if(arco.getLugar().hasMarcasSuficientes(arco.getPeso())) {
+                arco.getLugar().removeMarcas(arco.getPeso());
+            } else {
+                continue;
+            }
         }
 
         for (Arco arco : this.saida) {

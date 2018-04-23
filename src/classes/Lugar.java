@@ -3,6 +3,7 @@ package classes;
 public class Lugar {
     private int indice;
     private int marcas;
+    private int tempo;
 
     public Lugar(int indice) {
         this(indice, 1);
@@ -11,6 +12,12 @@ public class Lugar {
     public Lugar(int indice, int marcas) {
         this.indice = indice;
         this.marcas = marcas;
+    }
+
+    public Lugar(int indice, int marcas, int tempo) {
+        this.indice = indice;
+        this.marcas = marcas;
+        this.tempo = tempo;
     }
 
     public boolean hasMarcasSuficientes(int marcasNecessarias) {
@@ -31,6 +38,14 @@ public class Lugar {
 
     public void setMarcas(int marcas) {
         this.marcas = marcas;
+    }
+
+    public void setTempo(int tempo) {
+        this.tempo = tempo;
+    }
+
+    public int getTempo() {
+        return this.tempo;
     }
 
     public void addMarcas(int marcas) {

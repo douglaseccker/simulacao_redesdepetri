@@ -12,6 +12,7 @@ public class Rede {
     private int lugaresNum;
     private int transicoesNum;
     private int currentCicle;
+    private int tempo;
     private FileHandler file;
 
     public Rede() {
@@ -61,16 +62,16 @@ public class Rede {
 
         try {
             content = file.read(fileName);
+
+            if (content.equals("")) {
+                throw new Exception("Arquivo vazio.");
+            }
         } catch (IOException e) {
             System.out.println(e.getMessage());
             this.montaRedeArquivo(scan);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             this.montaRedeArquivo(scan);
-        }
-
-        if (content.equals("")) {
-            throw new Exception("Arquivo vazio.");
         }
 
         String[] lines = content.split("\n");
@@ -390,5 +391,13 @@ public class Rede {
 
     public void setCurrentCicle(int currentCicle) {
         this.currentCicle = currentCicle;
+    }
+
+    public int getTempo() {
+        return this.tempo;
+    }
+
+    public void setTempo(int tempo) {
+        this.tempo = tempo;
     }
 }
